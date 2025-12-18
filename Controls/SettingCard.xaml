@@ -1,0 +1,33 @@
+﻿<ui:CardControl
+    x:Class="PinPrompt.Controls.SettingCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PinPrompt.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    d:DesignWidth="400"
+    CornerRadius="10"
+    Icon="{Binding Icon}"
+    Style="{StaticResource {x:Type ui:CardControl}}"
+    mc:Ignorable="d">
+    <ui:CardControl.Header>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ui:TextBlock
+                Grid.Row="0"
+                Margin="0,0,0,5"
+                FontSize="16"
+                FontTypography="Body"
+                Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:SettingCard}}" />
+            <ui:TextBlock
+                Grid.Row="1"
+                FontSize="12"
+                Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                Text="{Binding Description, RelativeSource={RelativeSource AncestorType=local:SettingCard}}" />
+        </Grid>
+    </ui:CardControl.Header>
+</ui:CardControl>

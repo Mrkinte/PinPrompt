@@ -1,0 +1,135 @@
+﻿<Page
+    x:Class="PinPrompt.Views.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:PinPrompt.Helpers"
+    xmlns:local="clr-namespace:PinPrompt.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sc="clr-namespace:PinPrompt.Controls"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="SettingsPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <StackPanel Orientation="Vertical">
+        <sc:SettingCard
+            Title="开机自启动"
+            Margin="0,0,0,10"
+            Description="开机自动打开软件并显示提示信息"
+            Icon="{ui:SymbolIcon Laptop24}">
+            <ui:ToggleSwitch Command="{Binding SetAutoStartupCommand}" IsChecked="{Binding AutoStartup, Mode=TwoWay}" />
+        </sc:SettingCard>
+        <sc:SettingCard
+            Title="窗体自动最小化"
+            Margin="0,0,0,10"
+            Description="打开软件时主动隐藏主窗体到右下角系统托盘"
+            Icon="{ui:SymbolIcon TrayItemAdd24}">
+            <ui:ToggleSwitch Command="{Binding SetAutoHideMainWindowCommand}" IsChecked="{Binding AutoHideMainWindow}" />
+        </sc:SettingCard>
+        <sc:SettingCard
+            Title="主题"
+            Margin="0,0,0,10"
+            Description="调整应用的外观"
+            Icon="{ui:SymbolIcon PaintBrush24}">
+            <ComboBox
+                MinWidth="200"
+                ItemsSource="{Binding ThemeItems}"
+                SelectedItem="{Binding SelectedTheme}" />
+        </sc:SettingCard>
+        <sc:SettingCard
+            Title="日志文件夹"
+            Margin="0,0,0,10"
+            Description="{Binding LogFolder}"
+            Icon="{ui:SymbolIcon Folder24}">
+            <ui:Button
+                Appearance="Primary"
+                Command="{Binding OpenLogFolderCommand}"
+                Content="打开" />
+        </sc:SettingCard>
+
+        <!--  恢复默认配置  -->
+        <ui:CardControl
+            Margin="0,0,0,10"
+            CornerRadius="10"
+            Icon="{ui:SymbolIcon Delete24}">
+            <ui:CardControl.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ui:TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,5"
+                        FontSize="16"
+                        FontTypography="Body"
+                        Text="恢复默认设置" />
+                    <ui:TextBlock
+                        Grid.Row="1"
+                        FontSize="12"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        Text="恢复默认设置和删除已设置的水印" />
+                </Grid>
+            </ui:CardControl.Header>
+            <ui:Button
+                Name="RestoreConfigBtn"
+                Appearance="Primary"
+                Click="RestoreConfigBtn_Click"
+                Content="恢复"
+                IsEnabled="{Binding RestoreBtnIsEnable}" />
+        </ui:CardControl>
+        <Popup
+            x:Name="RestoreConfigPopup"
+            Height="60"
+            AllowsTransparency="True"
+            Placement="Bottom"
+            PlacementTarget="{Binding ElementName=RestoreConfigBtn}"
+            StaysOpen="False"
+            VerticalOffset="3">
+            <Border
+                Background="{DynamicResource ApplicationBackgroundBrush}"
+                BorderBrush="LightGray"
+                BorderThickness="1"
+                CornerRadius="10">
+                <StackPanel Orientation="Horizontal">
+                    <ui:TextBlock
+                        Margin="10"
+                        VerticalAlignment="Center"
+                        Text="确定恢复吗？" />
+                    <ui:Button
+                        Margin="0,0,10,0"
+                        Appearance="Danger"
+                        Click="RestoreConfigBtn_Click"
+                        Command="{Binding RemoveConfigFolderCommand}"
+                        Content="确定" />
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <sc:SettingCard
+            Title="获取最新版本"
+            Margin="0,0,0,10"
+            Description="{Binding AppVersion}"
+            Icon="{ui:SymbolIcon GlobeSurface24}">
+            <ui:Button
+                Appearance="Primary"
+                Command="{Binding CheckUpdateCommand}"
+                Content="检查更新" />
+        </sc:SettingCard>
+        <sc:SettingCard
+            Title="问题反馈"
+            Margin="0,0,0,10"
+            Description="在Github中反馈遇到的Bug"
+            Icon="{ui:SymbolIcon Bug24}">
+            <ui:HyperlinkButton
+                Appearance="Primary"
+                Content="问题反馈"
+                NavigateUri="https://github.com/Mrkinte/PinPrompt/issues" />
+        </sc:SettingCard>
+    </StackPanel>
+</Page>

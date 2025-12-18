@@ -1,0 +1,47 @@
+﻿<FlowDocument
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    AllowDrop="False"
+    PagePadding="5,0,5,0">
+    <Paragraph LineHeight="Auto" LineStackingStrategy="MaxHeight">
+        <Run
+            xml:lang="zh-cn"
+            xml:space="preserve"
+            Background="#FFFF8000"
+            FontFamily="Microsoft YaHei UI"
+            FontSize="24"
+            FontWeight="Bold"
+            NumberSubstitution.CultureSource="User"> Prompt示例1 </Run>
+    </Paragraph>
+    <Paragraph LineHeight="Auto" LineStackingStrategy="MaxHeight">
+        <Run
+            xml:lang="zh-cn"
+            FontSize="18"
+            FontWeight="Bold">
+            生产数据位于D:\Software\Data目录下，请定期归档。
+        </Run>
+    </Paragraph>
+    <Paragraph LineHeight="Auto" LineStackingStrategy="MaxHeight">
+        <Run
+            xml:lang="zh-cn"
+            FontSize="18"
+            FontWeight="Bold">
+            MES共享盘地址：\\192.168.11.254
+        </Run>
+    </Paragraph>
+    <Paragraph LineHeight="Auto" LineStackingStrategy="MaxHeight">
+        <Run
+            xml:lang="zh-cn"
+            FontSize="18"
+            FontWeight="Bold">
+            用户名：admin
+        </Run>
+    </Paragraph>
+    <Paragraph LineHeight="Auto" LineStackingStrategy="MaxHeight">
+        <Run
+            xml:lang="zh-cn"
+            FontSize="18"
+            FontWeight="Bold">
+            密码：admin
+        </Run>
+    </Paragraph>
+</FlowDocument>

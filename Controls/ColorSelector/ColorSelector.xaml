@@ -1,0 +1,355 @@
+﻿<UserControl
+    x:Class="PinPrompt.Controls.ColorSelector.ColorSelector"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PinPrompt.Controls.ColorSelector"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ui:Button
+            x:Name="ColorButton"
+            MinHeight="26"
+            Padding="0"
+            Click="ColorButton_Click">
+            <StackPanel Orientation="Horizontal">
+                <ui:SymbolIcon Margin="10,0,0,0" Symbol="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                <Border
+                    Width="10"
+                    Height="10"
+                    Margin="10,0,10,0"
+                    Background="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    CornerRadius="5" />
+            </StackPanel>
+        </ui:Button>
+
+        <Popup
+            x:Name="ColorPopup"
+            AllowsTransparency="True"
+            Placement="Bottom"
+            PlacementTarget="{Binding ElementName=ColorButton}"
+            PopupAnimation="Fade"
+            StaysOpen="False"
+            VerticalOffset="3">
+            <Border
+                Padding="10"
+                Background="{DynamicResource ApplicationBackgroundBrush}"
+                BorderBrush="LightGray"
+                BorderThickness="1"
+                CornerRadius="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,10"
+                        FontWeight="Bold"
+                        Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+                    <!--  标准色卡  -->
+                    <Grid
+                        Grid.Row="1"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                                    <Setter Property="Width" Value="24" />
+                                    <Setter Property="Height" Value="24" />
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Background="#FF0000"
+                            Click="ColorItem_Click"
+                            Tag="#FF0000" />
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Background="#FF8000"
+                            Click="ColorItem_Click"
+                            Tag="#FF8000" />
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Background="#FFFF00"
+                            Click="ColorItem_Click"
+                            Tag="#FFFF00" />
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Background="#80FF00"
+                            Click="ColorItem_Click"
+                            Tag="#80FF00" />
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="4"
+                            Background="#00FF00"
+                            Click="ColorItem_Click"
+                            Tag="#00FF00" />
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="5"
+                            Background="#00FF80"
+                            Click="ColorItem_Click"
+                            Tag="#00FF80" />
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="6"
+                            Background="#00FFFF"
+                            Click="ColorItem_Click"
+                            Tag="#00FFFF" />
+
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Background="#0080FF"
+                            Click="ColorItem_Click"
+                            Tag="#0080FF" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Background="#0000FF"
+                            Click="ColorItem_Click"
+                            Tag="#0000FF" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Background="#8000FF"
+                            Click="ColorItem_Click"
+                            Tag="#8000FF" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Background="#FF00FF"
+                            Click="ColorItem_Click"
+                            Tag="#FF00FF" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            Background="#FF0080"
+                            Click="ColorItem_Click"
+                            Tag="#FF0080" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="5"
+                            Background="#808080"
+                            Click="ColorItem_Click"
+                            Tag="#808080" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="6"
+                            Background="#C0C0C0"
+                            Click="ColorItem_Click"
+                            Tag="#C0C0C0" />
+
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Background="#FFC0CB"
+                            Click="ColorItem_Click"
+                            Tag="#FFC0CB" />
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Background="#FFA500"
+                            Click="ColorItem_Click"
+                            Tag="#FFA500" />
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Background="#FFFFE0"
+                            Click="ColorItem_Click"
+                            Tag="#FFFFE0" />
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="3"
+                            Background="#F0FFF0"
+                            Click="ColorItem_Click"
+                            Tag="#F0FFF0" />
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="4"
+                            Background="#E0FFFF"
+                            Click="ColorItem_Click"
+                            Tag="#E0FFFF" />
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="5"
+                            Background="#F0F8FF"
+                            Click="ColorItem_Click"
+                            Tag="#F0F8FF" />
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="6"
+                            Background="#FFF0F5"
+                            Click="ColorItem_Click"
+                            Tag="#FFF0F5" />
+
+                        <!--  FFFFFE避免主题系统覆盖FFFFFF  -->
+                        <Button
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Background="#FFFFFE"
+                            Click="ColorItem_Click"
+                            Tag="#FFFFFE" />
+                        <Button
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Background="#F5F5F5"
+                            Click="ColorItem_Click"
+                            Tag="#F5F5F5" />
+                        <Button
+                            Grid.Row="3"
+                            Grid.Column="2"
+                            Background="#EEEEEE"
+                            Click="ColorItem_Click"
+                            Tag="#EEEEEE" />
+                        <Button
+                            Grid.Row="3"
+                            Grid.Column="3"
+                            Background="#E0E0E0"
+                            Click="ColorItem_Click"
+                            Tag="#E0E0E0" />
+                        <Button
+                            Grid.Row="3"
+                            Grid.Column="4"
+                            Background="#BDBDBD"
+                            Click="ColorItem_Click"
+                            Tag="#BDBDBD" />
+                        <Button
+                            Grid.Row="3"
+                            Grid.Column="5"
+                            Background="#9E9E9E"
+                            Click="ColorItem_Click"
+                            Tag="#9E9E9E" />
+                        <Button
+                            Grid.Row="3"
+                            Grid.Column="6"
+                            Background="#757575"
+                            Click="ColorItem_Click"
+                            Tag="#757575" />
+
+                        <Button
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Background="#616161"
+                            Click="ColorItem_Click"
+                            Tag="#616161" />
+                        <Button
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Background="#424242"
+                            Click="ColorItem_Click"
+                            Tag="#424242" />
+                        <Button
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            Background="#212121"
+                            Click="ColorItem_Click"
+                            Tag="#212121" />
+                        <Button
+                            Grid.Row="4"
+                            Grid.Column="3"
+                            Background="#000000"
+                            Click="ColorItem_Click"
+                            Tag="#000000" />
+                    </Grid>
+
+                    <!--  自定义颜色  -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--  颜色预览  -->
+                        <Border
+                            x:Name="PreviewColorBorder"
+                            Grid.Row="0"
+                            Height="25"
+                            Margin="0,0,0,5"
+                            BorderBrush="Gray"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <ui:TextBlock
+                                x:Name="PreviewColorTextBlock"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="颜色预览" />
+                        </Border>
+
+                        <ui:TextBox
+                            x:Name="CustomColorTextBox"
+                            Grid.Row="1"
+                            Margin="0,0,0,10"
+                            DataObject.Pasting="HexTextBox_Pasting"
+                            MaxLength="7"
+                            MaxLines="1"
+                            PreviewKeyDown="HexTextBox_PreviewKeyDown"
+                            PreviewTextInput="HexTextBox_PreviewTextInput"
+                            Text="#"
+                            TextChanged="TextBox_TextChanged"
+                            ToolTip="自定义颜色"
+                            ToolTipService.InitialShowDelay="0" />
+
+                        <!--  按钮  -->
+                        <StackPanel
+                            Grid.Row="2"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <ui:Button
+                                x:Name="DefaultColorButton"
+                                Width="100"
+                                Margin="0,0,10,0"
+                                Appearance="Primary"
+                                Click="DefaultColorButton_Click"
+                                Content="默认颜色" />
+                            <ui:Button
+                                x:Name="ConfirmButton"
+                                Width="60"
+                                Margin="0,0,10,0"
+                                Appearance="Primary"
+                                Click="ConfirmButton_Click"
+                                Content="确定" />
+                            <ui:Button
+                                x:Name="CancelButton"
+                                Width="60"
+                                Appearance="Primary"
+                                Click="CancelButton_Click"
+                                Content="取消" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Popup>
+    </Grid>
+
+
+</UserControl>

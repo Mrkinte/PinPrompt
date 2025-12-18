@@ -1,0 +1,248 @@
+﻿<UserControl
+    x:Class="PinPrompt.Controls.RichTextEditor.RichTextEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:PinPrompt.Controls.ColorSelector"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:PinPrompt.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Border
+        x:Name="InternalContentArea"
+        Padding="5"
+        BorderBrush="LightGray"
+        BorderThickness="1"
+        CornerRadius="5">
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding EditorLoadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+        <Grid>
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="ToggleButton">
+                        <Setter Property="Width" Value="26" />
+                        <Setter Property="Height" Value="26" />
+                        <Setter Property="Padding" Value="1" />
+                        <Setter Property="Margin" Value="2" />
+                    </Style>
+                </ResourceDictionary>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <ToggleButton
+                    Command="{Binding ToggleBoldCommand}"
+                    IsChecked="{Binding BoldIsChecked}"
+                    ToolTip="加粗"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:SymbolIcon Symbol="TextBold24" />
+                </ToggleButton>
+                <ToggleButton
+                    Command="{Binding ToggleItalicCommand}"
+                    IsChecked="{Binding ItalicIsChecked}"
+                    ToolTip="斜体"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:SymbolIcon Symbol="TextItalic24" />
+                </ToggleButton>
+                <ToggleButton
+                    Command="{Binding ToggleUnderlineCommand}"
+                    IsChecked="{Binding UnderlineIsChecked}"
+                    ToolTip="下划线"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:SymbolIcon Symbol="TextUnderline24" />
+                </ToggleButton>
+                <ToggleButton
+                    Command="{Binding ToggleStrikethroughCommand}"
+                    IsChecked="{Binding StrikethroughIsChecked}"
+                    ToolTip="删除线"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:SymbolIcon Symbol="TextStrikethrough24" />
+                </ToggleButton>
+                <ComboBox
+                    Height="26"
+                    Margin="2"
+                    Padding="10,0,10,0"
+                    VerticalContentAlignment="Center"
+                    ItemsSource="{Binding FontFamilies}"
+                    SelectedItem="{Binding CurrentFontFamily, Mode=TwoWay}"
+                    ToolTip="字体"
+                    ToolTipService.InitialShowDelay="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:SymbolIcon
+                                    Width="24"
+                                    Height="24"
+                                    Margin="0,0,10,0"
+                                    Symbol="TextFont24" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding SetFontFamilyCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <ComboBox
+                    Height="26"
+                    Margin="2"
+                    Padding="10,0,10,0"
+                    VerticalContentAlignment="Center"
+                    ItemsSource="{Binding FontSizes}"
+                    SelectedItem="{Binding CurrentFontSize, Mode=TwoWay}"
+                    ToolTip="字体大小"
+                    ToolTipService.InitialShowDelay="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:SymbolIcon
+                                    Width="24"
+                                    Height="24"
+                                    Margin="0,0,10,0"
+                                    Symbol="TextFontSize24" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding SetFontSizeCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <control:ColorSelector
+                    Title="字体颜色"
+                    Margin="2"
+                    DefaultColor="Black"
+                    Icon="TextColor24"
+                    SelectedColor="{Binding FontColor, Mode=TwoWay}"
+                    ToolTip="字体颜色"
+                    ToolTipService.InitialShowDelay="0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ColorSelected">
+                            <i:InvokeCommandAction Command="{Binding SetFontColorCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </control:ColorSelector>
+                <control:ColorSelector
+                    Title="背景色"
+                    Margin="2"
+                    Icon="ColorFill24"
+                    SelectedColor="{Binding BackgroundColor, Mode=TwoWay}"
+                    ToolTip="背景色"
+                    ToolTipService.InitialShowDelay="0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ColorSelected">
+                            <i:InvokeCommandAction Command="{Binding SetBackgroundColorCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </control:ColorSelector>
+                <GridSplitter
+                    Width="1"
+                    Margin="10,3,10,3"
+                    Background="LightGray"
+                    IsEnabled="False" />
+                <ToggleButton
+                    Command="{Binding LeftAlignCommand}"
+                    IsChecked="{Binding LeftAlignIsChecked}"
+                    ToolTip="左对齐"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:SymbolIcon Symbol="TextAlignLeft24" />
+                </ToggleButton>
+                <ToggleButton
+                    Command="{Binding CenterAlignCommand}"
+                    IsChecked="{Binding CenterAlignIsChecked}"
+                    ToolTip="居中对齐"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:SymbolIcon Symbol="TextAlignCenter24" />
+                </ToggleButton>
+                <ToggleButton
+                    Command="{Binding RightAlignCommand}"
+                    IsChecked="{Binding RightAlignIsChecked}"
+                    ToolTip="右对齐"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:SymbolIcon Symbol="TextAlignRight24" />
+                </ToggleButton>
+
+                <ComboBox
+                    Width="120"
+                    Height="26"
+                    Margin="2"
+                    Padding="10,0,10,0"
+                    VerticalContentAlignment="Center"
+                    ItemsSource="{Binding LineSpacings}"
+                    SelectedItem="{Binding LineSpacing, Mode=TwoWay}"
+                    ToolTip="行间距"
+                    ToolTipService.InitialShowDelay="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:SymbolIcon
+                                    Width="24"
+                                    Height="24"
+                                    Margin="0,0,10,0"
+                                    Symbol="TextLineSpacing24" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding SetLineSpacingCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <GridSplitter
+                    Width="1"
+                    Margin="10,3,10,3"
+                    Background="LightGray"
+                    IsEnabled="False" />
+                <Button
+                    Width="26"
+                    Height="26"
+                    Margin="2"
+                    Padding="1"
+                    Command="{Binding ClearFormatCommand}"
+                    ToolTip="清除格式"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:SymbolIcon Symbol="TextClearFormatting24" />
+                </Button>
+            </StackPanel>
+
+            <GridSplitter
+                Grid.Row="1"
+                Height="1"
+                Margin="0,5,0,20"
+                HorizontalAlignment="Stretch"
+                Background="LightGray"
+                IsEnabled="False" />
+
+            <RichTextBox
+                x:Name="RichTextBox"
+                Grid.Row="2"
+                Padding="0"
+                Background="Transparent"
+                BorderThickness="0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding UpdateButtonStatusCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </RichTextBox>
+        </Grid>
+    </Border>
+</UserControl>

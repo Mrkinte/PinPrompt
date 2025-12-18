@@ -1,0 +1,112 @@
+﻿<FlowDocument
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    AllowDrop="False"
+    FontFamily="Microsoft YaHei UI"
+    FontSize="14"
+    LineHeight="14"
+    PagePadding="5,0,5,0">
+    <Section IsHyphenationEnabled="False">
+        <Section IsHyphenationEnabled="False">
+            <Section IsHyphenationEnabled="False">
+                <Section IsHyphenationEnabled="False">
+                    <Section
+                        IsHyphenationEnabled="False"
+                        NumberSubstitution.CultureSource="User"
+                        TextAlignment="Left">
+                        <Paragraph LineHeight="24">
+                            <Run
+                                xml:lang="zh-cn"
+                                xml:space="preserve"
+                                Background="#FFFF8000"
+                                FontSize="24"
+                                FontWeight="Bold"> 说 明 </Run>
+                        </Paragraph>
+                        <Paragraph LineHeight="16">
+                            <Run xml:lang="zh-cn" FontSize="16">这是一个简单的钉提示使用说明，支持编辑多个提示信息。</Run>
+                        </Paragraph>
+                        <Paragraph LineHeight="16">
+                            <Run
+                                xml:lang="zh-cn"
+                                Background="#00FFFFFF"
+                                FontSize="16">
+                                预览提示信息时
+                            </Run>
+                            <Run
+                                xml:lang="zh-cn"
+                                Background="#00FFFFFF"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="#FFFF0000">
+                                可以拖动预览窗口
+                            </Run>
+                            <Run
+                                xml:lang="zh-cn"
+                                Background="#00FFFFFF"
+                                FontSize="16">
+                                到你想要显示的位置，也
+                            </Run>
+                            <Run
+                                xml:lang="zh-cn"
+                                Background="#00FFFFFF"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="#FFFF0000">
+                                可以手动调整窗口大小
+                            </Run>
+                            <Run
+                                xml:lang="zh-cn"
+                                Background="#00FFFFFF"
+                                FontSize="16">
+                                。
+                            </Run>
+                        </Paragraph>
+                        <Paragraph LineHeight="16">
+                            <Run
+                                xml:lang="zh-cn"
+                                Background="#00FFFFFF"
+                                FontSize="16">
+                                确定位置和大小后
+                            </Run>
+                            <Run
+                                xml:lang="zh-cn"
+                                Background="#00FFFFFF"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="#FFFF0000">
+                                勾选启用并应用设置
+                            </Run>
+                            <Run
+                                xml:lang="zh-cn"
+                                Background="#00FFFFFF"
+                                FontSize="16">
+                                ，提示信息即可生效。
+                            </Run>
+                        </Paragraph>
+                        <Paragraph LineHeight="16">
+                            <Run xml:lang="zh-cn" FontSize="16">如需开机自动显示提示信息，请在设置中</Run>
+                            <Run
+                                xml:lang="zh-cn"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="#FFFF0000">
+                                启用开机自启动
+                            </Run>
+                            <Run xml:lang="zh-cn" FontSize="16">。</Run>
+                        </Paragraph>
+                        <Paragraph LineHeight="16">
+                            <Run xml:lang="zh-cn" FontSize="16">软件右上角关闭按钮会将软件隐藏至系统托盘，</Run>
+                            <Run
+                                xml:lang="zh-cn"
+                                FontSize="16"
+                                Foreground="#FFFF8000">
+                                如需退出软件请在右下角系统托盘处退出
+                            </Run>
+                            <Run xml:lang="zh-cn" FontSize="16">。</Run>
+                        </Paragraph>
+                    </Section>
+                </Section>
+            </Section>
+        </Section>
+    </Section>
+</FlowDocument>

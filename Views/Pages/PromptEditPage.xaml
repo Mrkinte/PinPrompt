@@ -1,0 +1,386 @@
+﻿<Page
+    x:Class="PinPrompt.Views.Pages.PromptEditPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:PinPrompt.Controls.RichTextEditor"
+    xmlns:cs="clr-namespace:PinPrompt.Controls.ColorSelector"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:PinPrompt.Helpers"
+    xmlns:local="clr-namespace:PinPrompt.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="PromptEditPage"
+    d:DataContext="{d:DesignInstance local:PromptEditPage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="720"
+    d:DesignWidth="960"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <system:Double x:Key="DefaultHeight">34</system:Double>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <control:RichTextEditor
+            x:Name="RichTextEditor"
+            Grid.Row="0"
+            Height="320"
+            Document="{Binding PromptDocument}" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock
+                Margin="20,0,10,0"
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                Text="选择提示" />
+            <ComboBox
+                x:Name="PromptListComboBox"
+                Height="{StaticResource DefaultHeight}"
+                MinWidth="200"
+                Margin="0,0,10,0"
+                ItemsSource="{Binding NameList}"
+                SelectedItem="{Binding CurrentName}" />
+
+            <ui:Button
+                x:Name="RenameButton"
+                Height="{StaticResource DefaultHeight}"
+                Margin="0,0,10,0"
+                Appearance="Primary"
+                Click="RenameButton_Click"
+                Content="重命名" />
+            <Popup
+                x:Name="RenamePopup"
+                Height="60"
+                AllowsTransparency="True"
+                Placement="Bottom"
+                PlacementTarget="{Binding ElementName=RenameButton}"
+                StaysOpen="False"
+                VerticalOffset="3">
+                <Border
+                    Background="{DynamicResource ApplicationBackgroundBrush}"
+                    BorderBrush="LightGray"
+                    BorderThickness="1"
+                    CornerRadius="10">
+                    <StackPanel Orientation="Horizontal">
+                        <ui:TextBox
+                            x:Name="RenameTextBox"
+                            Height="{StaticResource DefaultHeight}"
+                            Margin="10"
+                            ClearButtonEnabled="False"
+                            Focusable="True"
+                            MaxLines="1"
+                            PlaceholderText="请在此处给提示重命名" />
+                        <ui:Button
+                            Margin="0,0,10,0"
+                            Appearance="Primary"
+                            Click="RenameButton_Click"
+                            Command="{Binding RenamePromptCommand}"
+                            CommandParameter="{Binding Text, ElementName=RenameTextBox}"
+                            Content="确定" />
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <ui:Button
+                x:Name="AddPromptButton"
+                Height="{StaticResource DefaultHeight}"
+                Margin="0,0,10,0"
+                Appearance="Primary"
+                Click="AddPromptButton_Click"
+                Content="添加" />
+            <Popup
+                x:Name="SetPromptNamePopup"
+                Height="60"
+                AllowsTransparency="True"
+                Placement="Bottom"
+                PlacementTarget="{Binding ElementName=AddPromptButton}"
+                StaysOpen="False"
+                VerticalOffset="3">
+                <Border
+                    Background="{DynamicResource ApplicationBackgroundBrush}"
+                    BorderBrush="LightGray"
+                    BorderThickness="1"
+                    CornerRadius="10">
+                    <StackPanel Orientation="Horizontal">
+                        <ui:TextBox
+                            x:Name="PromptNameTextBox"
+                            Height="{StaticResource DefaultHeight}"
+                            Margin="10"
+                            ClearButtonEnabled="False"
+                            MaxLines="1"
+                            PlaceholderText="请在此处给提示命名" />
+                        <ui:Button
+                            Margin="0,0,10,0"
+                            Appearance="Primary"
+                            Click="AddPromptButton_Click"
+                            Command="{Binding AddPromptCommand}"
+                            CommandParameter="{Binding Text, ElementName=PromptNameTextBox}"
+                            Content="确定" />
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <ui:Button
+                x:Name="RemovePromptButton"
+                Height="{StaticResource DefaultHeight}"
+                Appearance="Danger"
+                Click="RemovePromptButton_Click"
+                Content="删除" />
+            <Popup
+                x:Name="RemovePromptPopup"
+                Height="60"
+                AllowsTransparency="True"
+                Placement="Bottom"
+                PlacementTarget="{Binding ElementName=RemovePromptButton}"
+                StaysOpen="False"
+                VerticalOffset="3">
+                <Border
+                    Background="{DynamicResource ApplicationBackgroundBrush}"
+                    BorderBrush="LightGray"
+                    BorderThickness="1"
+                    CornerRadius="10">
+                    <StackPanel Orientation="Horizontal">
+                        <ui:TextBlock
+                            Margin="10"
+                            VerticalAlignment="Center"
+                            Text="确定删除吗？" />
+                        <ui:Button
+                            Margin="0,0,10,0"
+                            Appearance="Danger"
+                            Click="RemovePromptButton_Click"
+                            Command="{Binding RemovePromptCommand}"
+                            Content="确定" />
+                    </StackPanel>
+                </Border>
+            </Popup>
+            <CheckBox
+                Margin="40,0,0,0"
+                Padding="0"
+                Content="启用"
+                IsChecked="{Binding IsActivated}"
+                ToolTip="勾选启用并应用设置才会将提示信息显示到桌面上。"
+                ToolTipService.InitialShowDelay="0" />
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="54" />
+                <RowDefinition Height="54" />
+                <RowDefinition Height="54" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock
+                    Margin="20,10,40,10"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="文本" />
+                <TextBlock VerticalAlignment="Center" Text="不透明度" />
+                <Slider
+                    x:Name="PromptOpacitySlider"
+                    Width="100"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    IsSnapToTickEnabled="True"
+                    Maximum="1"
+                    TickFrequency="0.1"
+                    ValueChanged="PromptOpacitySlider_ValueChanged"
+                    Value="{Binding Opacity, Mode=TwoWay}" />
+                <TextBlock
+                    x:Name="OpacityPercentText"
+                    MinWidth="40"
+                    Margin="10,0,30,0"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock
+                    Margin="20,10,40,10"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="背景" />
+                <TextBlock VerticalAlignment="Center" Text="颜色" />
+                <cs:ColorSelector
+                    Title="背景色"
+                    Height="{StaticResource DefaultHeight}"
+                    Margin="10"
+                    DefaultColor="White"
+                    Icon="ColorBackground24"
+                    SelectedColor="{Binding BackgroundColor, Mode=TwoWay}" />
+                <TextBlock
+                    Margin="30,0,0,0"
+                    VerticalAlignment="Center"
+                    Text="不透明度" />
+                <Slider
+                    x:Name="BackgroundOpacitySlider"
+                    Width="100"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    IsSnapToTickEnabled="True"
+                    Maximum="1"
+                    TickFrequency="0.1"
+                    ValueChanged="BackgroundOpacitySlider_ValueChanged"
+                    Value="{Binding BackgroundOpacity, Mode=TwoWay}" />
+                <TextBlock
+                    x:Name="BackgroundOpacityPercentText"
+                    MinWidth="40"
+                    Margin="10,0,30,0"
+                    VerticalAlignment="Center" />
+                <TextBlock VerticalAlignment="Center" Text="圆角" />
+                <Slider
+                    x:Name="BackgroundRadiusSlider"
+                    Width="100"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    IsSnapToTickEnabled="True"
+                    Maximum="100"
+                    TickFrequency="1"
+                    ValueChanged="BackgroundRadiusSlider_ValueChanged"
+                    Value="{Binding BackgroundRadius, Mode=TwoWay}" />
+                <TextBlock
+                    x:Name="BackgroundRadiusText"
+                    MinWidth="40"
+                    Margin="10,0,30,0"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <TextBlock
+                    Margin="20,10,40,10"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="窗体" />
+                <CheckBox
+                    Padding="0"
+                    Content="自动宽高"
+                    IsChecked="{Binding IsAutoSize, Mode=TwoWay}" />
+                <CheckBox
+                    Padding="0"
+                    Content="始终置顶"
+                    Cursor="Hand"
+                    IsChecked="{Binding IsTop, Mode=TwoWay}" />
+                <CheckBox
+                    Padding="0"
+                    Content="边缘吸附"
+                    IsChecked="{Binding IsSnapToEdge, Mode=TwoWay}"
+                    ToolTip="预览提示时如果预览窗体靠近屏幕边缘，松开鼠标窗体会自动吸附。"
+                    ToolTipService.InitialShowDelay="0" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <StackPanel
+                    Width="90"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Margin="20,0,10,0"
+                        VerticalAlignment="Center"
+                        Foreground="Red"
+                        Text="预览中"
+                        Visibility="{Binding IsPreviewing, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Border
+                        Width="14"
+                        Height="14"
+                        Background="Red"
+                        CornerRadius="7"
+                        Visibility="{Binding IsPreviewing, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                </StackPanel>
+                <ui:Button
+                    Width="100"
+                    Height="{StaticResource DefaultHeight}"
+                    Margin="20,0,10,0"
+                    Appearance="Primary"
+                    Command="{Binding PreviewPromptCommand}"
+                    Content="打开预览" />
+                <ui:Button
+                    Width="100"
+                    Height="{StaticResource DefaultHeight}"
+                    Margin="10"
+                    Appearance="Primary"
+                    Command="{Binding ClosePreviewPromptCommand}"
+                    Content="关闭预览" />
+                <ui:Button
+                    x:Name="ApplyButton"
+                    Width="100"
+                    Height="{StaticResource DefaultHeight}"
+                    Margin="100,0,0,0"
+                    Appearance="Caution"
+                    Click="ApplyButton_Click"
+                    Content="应用设置" />
+                <Popup
+                    x:Name="ApplyPopup"
+                    Height="60"
+                    AllowsTransparency="True"
+                    Placement="Bottom"
+                    PlacementTarget="{Binding ElementName=ApplyButton}"
+                    StaysOpen="False"
+                    VerticalOffset="3">
+                    <Border
+                        Background="{DynamicResource ApplicationBackgroundBrush}"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        CornerRadius="10">
+                        <StackPanel Orientation="Horizontal">
+                            <ui:TextBlock
+                                Margin="10"
+                                VerticalAlignment="Center"
+                                Text="确定保存设置吗？" />
+                            <ui:Button
+                                Margin="0,0,10,0"
+                                Appearance="Caution"
+                                Click="ApplyButton_Click"
+                                Command="{Binding ApplyConfigsCommand}"
+                                Content="确定" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
+                <ui:Button
+                    x:Name="DisableAllPromptsButton"
+                    Height="{StaticResource DefaultHeight}"
+                    Margin="10"
+                    Appearance="Danger"
+                    Click="DisableAllPromptsButton_Click"
+                    Content="禁用所有提示" />
+                <Popup
+                    x:Name="DisableAllPromptsPopup"
+                    Height="60"
+                    AllowsTransparency="True"
+                    Placement="Bottom"
+                    PlacementTarget="{Binding ElementName=DisableAllPromptsButton}"
+                    StaysOpen="False"
+                    VerticalOffset="3">
+                    <Border
+                        Background="{DynamicResource ApplicationBackgroundBrush}"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        CornerRadius="10">
+                        <StackPanel Orientation="Horizontal">
+                            <ui:TextBlock
+                                Margin="10"
+                                VerticalAlignment="Center"
+                                Text="确定禁用所有提示吗？" />
+                            <ui:Button
+                                Margin="0,0,10,0"
+                                Appearance="Danger"
+                                Click="DisableAllPromptsButton_Click"
+                                Command="{Binding DisableAllPromptsCommand}"
+                                Content="确定" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

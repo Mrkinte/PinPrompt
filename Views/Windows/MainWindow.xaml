@@ -1,0 +1,99 @@
+﻿<ui:FluentWindow
+    x:Class="PinPrompt.Views.Windows.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:PinPrompt.Views.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:PinPrompt.Models"
+    xmlns:tb="http://www.hardcodet.net/taskbar"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
+    Width="1080"
+    Height="720"
+    d:DataContext="{d:DesignInstance local:MainWindow,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Closing="FluentWindow_Closing"
+    ExtendsContentIntoTitleBar="True"
+    Visibility="{Binding WindowVisibility}"
+    WindowBackdropType="Mica"
+    WindowCornerPreference="Round"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ViewModel.LoadedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Activated">
+            <i:InvokeCommandAction Command="{Binding ViewModel.WindowActivatedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <!--  托盘图标  -->
+        <tb:TaskbarIcon
+            x:Name="TrayIcon"
+            IconSource="pack://application:,,,/Assets/tray-icon.ico"
+            ToolTipText="钉提示"
+            TrayLeftMouseDown="ShowWindow_Click"
+            Visibility="Visible">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Click="ShowWindow_Click" Header="显示窗口" />
+                    <MenuItem Click="ExitApp_Click" Header="退出" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+
+        <ui:TitleBar
+            x:Name="TitleBar"
+            Title="{Binding ViewModel.ApplicationTitle}"
+            Grid.Row="0"
+            CloseWindowByDoubleClickOnIcon="True">
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon Source="pack://application:,,,/Assets/favicon-icon-512.png" />
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
+
+        <ui:NavigationView
+            x:Name="RootNavigation"
+            Padding="10,10,15,10"
+            FooterMenuItemsSource="{Binding ViewModel.FooterMenuItems, Mode=OneWay}"
+            FrameMargin="0"
+            IsBackButtonVisible="Visible"
+            IsPaneOpen="False"
+            IsPaneToggleVisible="True"
+            MenuItemsSource="{Binding ViewModel.MenuItems, Mode=OneWay}"
+            OpenPaneLength="150"
+            PaneDisplayMode="Left"
+            TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}">
+            <ui:NavigationView.ContentOverlay>
+                <Grid>
+                    <!--  堆叠通知容器  -->
+                    <ItemsControl
+                        Width="400"
+                        Margin="0,32,32,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        ItemsSource="{Binding NotificationService.Notifications}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:NotificationItem}">
+                                <ui:InfoBar
+                                    Title="{Binding Title}"
+                                    Margin="0,0,0,8"
+                                    VerticalAlignment="Top"
+                                    IsClosable="False"
+                                    IsOpen="{Binding IsOpen}"
+                                    Message="{Binding Message}"
+                                    Severity="{Binding Severity}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </ui:NavigationView.ContentOverlay>
+        </ui:NavigationView>
+    </Grid>
+</ui:FluentWindow>

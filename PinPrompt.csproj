@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <SignAssembly>False</SignAssembly>
+    <UseWindowsForms>False</UseWindowsForms>
+	<Version>1.0.0</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+	<FileVersion>$(Version)</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Default\AppConfig.json" />
+    <None Remove="Assets\favicon-icon-512.png" />
+    <None Remove="Assets\favicon.ico" />
+    <None Remove="Assets\tray-icon.ico" />
+    <None Remove="favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Assets\Default\Prompts\4e727e54-abc9-472f-924e-3b6b86a48712.xaml" />
+    <Page Remove="Assets\Default\Prompts\79b0fb5e-109b-4f67-ac47-67e95be3f267.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="WPF-UI" Version="4.0.2" />
+    <PackageReference Include="WPF-UI.DependencyInjection" Version="4.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0 " />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Default\AppConfig.json" />
+    <EmbeddedResource Include="Assets\Default\Prompts\4e727e54-abc9-472f-924e-3b6b86a48712.xaml" />
+    <EmbeddedResource Include="Assets\Default\Prompts\79b0fb5e-109b-4f67-ac47-67e95be3f267.xaml" />
+    <Resource Include="Assets\favicon-icon-512.png" />
+    <Resource Include="Assets\tray-icon.ico" />
+  </ItemGroup>
+
+</Project>

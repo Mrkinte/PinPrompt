@@ -1,0 +1,41 @@
+{
+  "UserConfig": {
+    "AutoStartup": false,
+    "AutoHideMainWindow": false,
+    "Theme": "\u6D45\u8272"
+  },
+  "PromptConfigList": [
+    {
+      "Name": "\u9ED8\u8BA4\u63D0\u793A",
+      "Guid": "4e727e54-abc9-472f-924e-3b6b86a48712",
+      "LeftPosition": 0,
+      "TopPosition": 0,
+      "IsActivated": false,
+      "BackgroundColor": "#FFFFFF",
+      "BackgroundOpacity": 0.5,
+      "BackgroundRadius": 5,
+      "Opacity": 1,
+      "IsTop": true,
+      "IsSnapToEdge": true,
+      "IsAutoSize": true,
+      "Width": 786,
+      "Height": 223.76
+    },
+    {
+      "Name": "Prompt\u793A\u4F8B1",
+      "Guid": "79b0fb5e-109b-4f67-ac47-67e95be3f267",
+      "LeftPosition": 0,
+      "TopPosition": 0,
+      "IsActivated": true,
+      "BackgroundColor": "#FFFFFF",
+      "BackgroundOpacity": 0.5,
+      "BackgroundRadius": 5,
+      "Opacity": 1,
+      "IsTop": true,
+      "IsSnapToEdge": true,
+      "IsAutoSize": true,
+      "Width": 478.40000000000003,
+      "Height": 224.8
+    }
+  ]
+}
