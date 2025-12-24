@@ -28,5 +28,13 @@ namespace PinPrompt.Services
                 _trayIcon.ShowBalloonTip(title, message, icon);
             }
         }
+
+        /// <summary>
+        /// 屏蔽系统托盘通知
+        /// </summary>
+        public void DisableNotification()
+        {
+            _trayIcon = null;
+        }
     }
 }

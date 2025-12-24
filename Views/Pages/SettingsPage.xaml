@@ -78,10 +78,11 @@
             </ui:CardControl.Header>
             <ui:Button
                 Name="RestoreConfigBtn"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
                 Appearance="Primary"
                 Click="RestoreConfigBtn_Click"
-                Content="恢复"
-                IsEnabled="{Binding RestoreBtnIsEnable}" />
+                Content="恢复" />
         </ui:CardControl>
         <Popup
             x:Name="RestoreConfigPopup"
@@ -100,12 +101,12 @@
                     <ui:TextBlock
                         Margin="10"
                         VerticalAlignment="Center"
-                        Text="确定恢复吗？" />
+                        Text="软件将重启，确定恢复吗？" />
                     <ui:Button
                         Margin="0,0,10,0"
                         Appearance="Danger"
                         Click="RestoreConfigBtn_Click"
-                        Command="{Binding RemoveConfigFolderCommand}"
+                        Command="{Binding RestoreDefaultCommand}"
                         Content="确定" />
                 </StackPanel>
             </Border>
