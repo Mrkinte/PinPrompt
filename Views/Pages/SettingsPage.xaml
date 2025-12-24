@@ -73,7 +73,7 @@
                         Grid.Row="1"
                         FontSize="12"
                         Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
-                        Text="恢复默认设置和删除已设置的水印" />
+                        Text="恢复默认设置和删除已设置的提示" />
                 </Grid>
             </ui:CardControl.Header>
             <ui:Button
