@@ -9,15 +9,28 @@ namespace PinPrompt.Views.Windows
     /// </summary>
     public partial class UpdateDialogWindow : FluentWindow
     {
-        public UpdateDialogWindow(string version, string downloadLink, string UpdateLog)
+        public UpdateDialogWindow(
+            string version,
+            string githubDownloadLink,
+            string sourceForgeDownloadLink,
+            string UpdateLog)
         {
             Owner = App.Current.MainWindow;
 
             InitializeComponent();
 
             VersionTextBlock.Text = $"发现新版本：{version}";
-            DownloadButton.NavigateUri = downloadLink;
-            FlowDocument updateLogDocument = RichTextEditorHelper.XamlToFlowDocumentConverter(UpdateLog);
+            if (string.IsNullOrWhiteSpace(githubDownloadLink))
+            {
+                GithubDownloadButton.Visibility = Visibility.Collapsed;
+            }
+            if (string.IsNullOrWhiteSpace(sourceForgeDownloadLink))
+            {
+                SourceForgeDownloadButton.Visibility = Visibility.Collapsed;
+            }
+            GithubDownloadButton.NavigateUri = githubDownloadLink;
+            SourceForgeDownloadButton.NavigateUri = sourceForgeDownloadLink;
+            FlowDocument? updateLogDocument = RichTextEditorHelper.XamlToFlowDocumentConverter(UpdateLog);
             if (updateLogDocument != null)
             {
                 UpdateLogViewer.Document = updateLogDocument;

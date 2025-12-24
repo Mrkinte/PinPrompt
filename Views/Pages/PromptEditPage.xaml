@@ -186,7 +186,20 @@
                     VerticalAlignment="Center"
                     FontWeight="Bold"
                     Text="文本" />
-                <TextBlock VerticalAlignment="Center" Text="不透明度" />
+                <ui:Button
+                    Height="{StaticResource DefaultHeight}"
+                    Command="{Binding ImportXamlCommand}"
+                    Content="导入文本"
+                    ToolTip="从Xaml导入提示内容"
+                    ToolTipService.InitialShowDelay="0">
+                    <ui:Button.Icon>
+                        <ui:SymbolIcon Symbol="ArrowImport24" />
+                    </ui:Button.Icon>
+                </ui:Button>
+                <TextBlock
+                    Margin="40,0,0,0"
+                    VerticalAlignment="Center"
+                    Text="不透明度" />
                 <Slider
                     x:Name="PromptOpacitySlider"
                     Width="100"
@@ -199,7 +212,7 @@
                     Value="{Binding Opacity, Mode=TwoWay}" />
                 <TextBlock
                     x:Name="OpacityPercentText"
-                    MinWidth="40"
+                    MinWidth="42"
                     Margin="10,0,30,0"
                     VerticalAlignment="Center" />
             </StackPanel>
@@ -213,6 +226,7 @@
                 <TextBlock VerticalAlignment="Center" Text="颜色" />
                 <cs:ColorSelector
                     Title="背景色"
+                    Width="64"
                     Height="{StaticResource DefaultHeight}"
                     Margin="10"
                     DefaultColor="White"
@@ -234,7 +248,7 @@
                     Value="{Binding BackgroundOpacity, Mode=TwoWay}" />
                 <TextBlock
                     x:Name="BackgroundOpacityPercentText"
-                    MinWidth="40"
+                    MinWidth="42"
                     Margin="10,0,30,0"
                     VerticalAlignment="Center" />
                 <TextBlock VerticalAlignment="Center" Text="圆角" />
@@ -250,7 +264,7 @@
                     Value="{Binding BackgroundRadius, Mode=TwoWay}" />
                 <TextBlock
                     x:Name="BackgroundRadiusText"
-                    MinWidth="40"
+                    MinWidth="42"
                     Margin="10,0,30,0"
                     VerticalAlignment="Center" />
             </StackPanel>

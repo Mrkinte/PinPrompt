@@ -234,7 +234,7 @@ namespace PinPrompt.Controls.RichTextEditor
             catch (Exception ex)
             {
                 Log.Logger.Error($"Xaml解析失败：{ ex.Message }");
-                return null;
+                throw new Exception(ex.Message);
             }
         }
 

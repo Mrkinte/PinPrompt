@@ -20,7 +20,7 @@ namespace PinPrompt
     public partial class App
     {
         // 用于检测应用是否已经运行的互斥锁
-        private static Mutex? _mutex = null;
+        public static Mutex? MultiRunMutex { get; set; } = null;
 
         // The.NET Generic Host provides dependency injection, configuration, logging, and other services.
         // https://docs.microsoft.com/dotnet/core/extensions/generic-host
@@ -94,7 +94,7 @@ namespace PinPrompt
             bool createdNew;
 
             // 创建全局互斥锁，使用应用程序名称作为唯一标识符
-            _mutex = new Mutex(true, appName, out createdNew);
+            MultiRunMutex = new Mutex(true, appName, out createdNew);
 
             if (!createdNew)
             {

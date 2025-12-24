@@ -1,6 +1,7 @@
 ﻿using PinPrompt.Helpers;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace PinPrompt.Controls.PromptWindow
 {
@@ -100,10 +101,41 @@ namespace PinPrompt.Controls.PromptWindow
     {
         private double _snapThreshold = 15;
 
+        [DllImport("user32.dll")]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter,
+            int X, int Y, int cx, int cy, uint uFlags);
+
+        private const int GWL_EXSTYLE = -20;
+        private const int WS_EX_TOOLWINDOW = 0x00000080;
+        private const int SWP_NOMOVE = 0x0002;
+        private const int SWP_NOSIZE = 0x0001;
+        private const int SWP_NOZORDER = 0x0004;
+        private const int SWP_FRAMECHANGED = 0x0020;
+
         public PromptWindow(PromptWindowViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
+
+            this.SourceInitialized += OnSourceInitialized;
+        }
+
+        private void OnSourceInitialized(object? sender, EventArgs e)
+        {
+            var hwnd = new WindowInteropHelper(this).Handle;
+
+            // 获取并改变窗口样式，不在Alt+Tab中显示
+            int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TOOLWINDOW);
+            // 刷新窗口
+            SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
         }
 
         #region 窗口拖动相关方法

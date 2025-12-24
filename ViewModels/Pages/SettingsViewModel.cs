@@ -16,6 +16,7 @@ namespace PinPrompt.ViewModels.Pages
         private readonly ILogger _logger;
         private readonly AppConfigService _appConfigService;
         private readonly NotificationService _notificationService;
+        private readonly TrayNotificationService _trayNotificationService;
         private readonly UpdateService _updateService;
 
         [ObservableProperty]
@@ -35,9 +36,6 @@ namespace PinPrompt.ViewModels.Pages
 
         [ObservableProperty]
         private string _logFolder;
-
-        [ObservableProperty]
-        private bool _restoreBtnIsEnable = true;
 
         partial void OnSelectedThemeChanged(object value)
         {
@@ -71,12 +69,14 @@ namespace PinPrompt.ViewModels.Pages
 
         public SettingsViewModel(ILogger logger, AppConfigService appConfigService,
             NotificationService notificationService,
+            TrayNotificationService trayNotificationService,
             UpdateService updateService)
         {
             _isInitialized = false;
             _logger = logger;
             _appConfigService = appConfigService;
             _notificationService = notificationService;
+            _trayNotificationService = trayNotificationService;
             _updateService = updateService;
 
             AppVersion = string.Empty;
@@ -129,13 +129,19 @@ namespace PinPrompt.ViewModels.Pages
         }
 
         [RelayCommand]
-        private void OnRemoveConfigFolder()
+        private void OnRestoreDefault()
         {
             try
             {
+                StartupHelper.SetStartup(false);    // 取消开机自启动，删除注册表项。
+                _trayNotificationService.DisableNotification();     // 屏蔽最小化通知弹窗。
                 Directory.Delete(_appConfigService.ConfigFolder, true);
-                _notificationService.Show("成功", "已恢复软件默认设置，提示列表清空需重启生效。", InfoBarSeverity.Success);
-                RestoreBtnIsEnable = false;
+                // 释放多开互斥锁，重启应用程序。
+                App.MultiRunMutex!.ReleaseMutex();
+                App.MultiRunMutex.Dispose();
+                App.MultiRunMutex = null;
+                System.Windows.Forms.Application.Restart();
+                App.Current.Shutdown();
             }
             catch (Exception ex)
             {

@@ -13,18 +13,20 @@ namespace PinPrompt.Services
 
         // 更新源
         private readonly List<string> _urlList = new List<string> {
-            "https://raw.githubusercontent.com/Mrkinte/PinPrompt/refs/heads/main/version.xml"};
+            "https://raw.githubusercontent.com/Mrkinte/PinPrompt/refs/heads/main/version.xml",
+            "https://sourceforge.net/p/pin-prompt/code/ci/main/tree/version.xml?format=raw"};
 
         private bool _isBusy = false;
         private Version _onlineVersion;
-        private string _onlineDownloadLink = string.Empty;
+        private string _githubDownloadLink = string.Empty;
+        private string _sourceForgeDownloadLink = string.Empty;
         private string _onlineUpdateLog = string.Empty;
 
         public UpdateService(ILogger logger, NotificationService notificationService)
         {
             _logger = logger;
             _notificationService = notificationService;
-            _onlineVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0);
+            _onlineVersion = new Version(1, 0, 0);
         }
 
         public void CheckUpdate()
@@ -37,13 +39,22 @@ namespace PinPrompt.Services
                     return;
                 }
                 _isBusy = true;
-                Version currentVersion = _onlineVersion;
+                
+                // 初始化版本信息
+                Version currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0);
+                _onlineVersion = new Version(1, 0, 0);
+                
                 bool result = await GetOnlineVersion();
                 if (_onlineVersion > currentVersion)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        UpdateDialogWindow updateDialog = new UpdateDialogWindow(_onlineVersion.ToString(), _onlineDownloadLink, _onlineUpdateLog);
+                        UpdateDialogWindow updateDialog = new UpdateDialogWindow(
+                            _onlineVersion.ToString(),
+                            _githubDownloadLink,
+                            _sourceForgeDownloadLink,
+                            _onlineUpdateLog);
+
                         updateDialog.ShowDialog();
                     });
                 }
@@ -100,7 +111,8 @@ namespace PinPrompt.Services
                 {
                     _onlineVersion = new Version(version);
                 }
-                _onlineDownloadLink = doc.Root.Element("download_link")?.Value ?? string.Empty;
+                _githubDownloadLink = doc.Root.Element("download_link")?.Value ?? string.Empty;
+                _sourceForgeDownloadLink = doc.Root.Element("download_link2")?.Value ?? string.Empty;
                 _onlineUpdateLog = doc.Root.Element("update_contents")?.Value ?? string.Empty;
                 _logger.Information($"获取更新成功，最新版本：{_onlineVersion}");
                 return true;

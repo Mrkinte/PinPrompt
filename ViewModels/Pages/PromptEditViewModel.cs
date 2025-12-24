@@ -1,9 +1,11 @@
-﻿using PinPrompt.Controls.ColorSelector;
+﻿using Microsoft.Win32;
+using PinPrompt.Controls.ColorSelector;
 using PinPrompt.Controls.RichTextEditor;
 using PinPrompt.Helpers;
 using PinPrompt.Models;
 using PinPrompt.Services;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Wpf.Ui.Abstractions.Controls;
@@ -208,6 +210,34 @@ namespace PinPrompt.ViewModels.Pages
             _notificationService.Show("成功", $"提示信息 {CurrentName} 已删除", InfoBarSeverity.Success);
             NameList = _promptService.AllPromptNames;
             CurrentName = NameList.First();
+        }
+
+        [RelayCommand]
+        private void OnImportXaml()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                // 设置对话框属性
+                Filter = "XAML 文件 (*.xaml)|*.xaml|所有文件 (*.*)|*.*",
+                FilterIndex = 1,
+                Title = "导入Xaml内容",
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
+            bool? result = openFileDialog.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    string xamlContent = File.ReadAllText(openFileDialog.FileName);
+                    PromptDocument = RichTextEditorHelper.XamlToFlowDocumentConverter(xamlContent);
+                    _notificationService.Show("成功", "导入成功", InfoBarSeverity.Success);
+                }
+                catch (Exception ex)
+                {
+                    _notificationService.Show("错误", $"加载文件时出错: {ex.Message}", InfoBarSeverity.Error);
+                }
+            }
         }
 
         /// <summary>

@@ -126,6 +126,7 @@
                 </ComboBox>
                 <control:ColorSelector
                     Title="字体颜色"
+                    Height="26"
                     Margin="2"
                     DefaultColor="Black"
                     Icon="TextColor24"
@@ -140,6 +141,7 @@
                 </control:ColorSelector>
                 <control:ColorSelector
                     Title="背景色"
+                    Height="26"
                     Margin="2"
                     Icon="ColorFill24"
                     SelectedColor="{Binding BackgroundColor, Mode=TwoWay}"

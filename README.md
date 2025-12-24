@@ -1,5 +1,6 @@
 ﻿<p align="center">
 <a href="https://github.com/Mrkinte/PinPrompt"><img src="https://komarev.com/ghpvc/?username=Mrkinte&style=flat-square" alt="PinPrompt"></a>
+<a href="https://github.com/Mrkinte/PinPrompt/releases/download/1.0.0/PinPrompt_1.0.0_x64_setup.exe"><img src="https://github-release-download-badges.marjin.workers.dev/Mrkinte/PinPrompt?style=flat-square&color=orange" alt="Download"></a>
 <a href="https://github.com/Mrkinte/PinPrompt/LICENSE.txt"><img src="https://img.shields.io/github/license/antonkomarev/github-profile-views-counter.svg?style=flat-square" alt="License"></a>
 </p>
 
@@ -18,5 +19,5 @@
 - 支持多种字体样式和颜色设置，能实现较为丰富的显示效果。
 
 ## 🎨 示例
-![主窗口](https://github.com/Mrkinte/PinPrompt/blob/main/Sample/Sample1.png)
-![设置页](https://github.com/Mrkinte/PinPrompt/blob/main/Sample/Sample2.png)
+![主窗口](https://github.com/Mrkinte/PinPrompt/blob/main/Sample/Sample1.png?raw=true)
+![设置页](https://github.com/Mrkinte/PinPrompt/blob/main/Sample/Sample2.png?raw=true)

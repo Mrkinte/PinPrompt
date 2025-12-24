@@ -9,8 +9,8 @@ namespace PinPrompt.Views.Windows
 {
     public partial class MainWindow : INavigationWindow
     {
-        private bool isRealExit = false;
-        private bool isFirstHidden = true;
+        private bool _isRealExit = false;
+        private bool _isFirstHidden = true;
 
         public MainWindowViewModel ViewModel { get; }
         public NotificationService NotificationService { get; }
@@ -84,23 +84,23 @@ namespace PinPrompt.Views.Windows
 
         private void ExitApp_Click(object sender, RoutedEventArgs e)
         {
-            isRealExit = true;
+            _isRealExit = true;
             this.Close();
         }
 
         private void FluentWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!isRealExit)
+            if (!_isRealExit)
             {
                 e.Cancel = true;    // 取消关闭操作
                 this.Hide();        // 隐藏窗口
                 this.ShowInTaskbar = false;     // 隐藏任务栏图标
 
                 // 显示托盘提示
-                if (isFirstHidden)
+                if (_isFirstHidden)
                 {
                     TrayNotificationService.ShowNotification("提示", "程序已最小化到系统托盘，单击图标可重新打开主界面");
-                    isFirstHidden = false;
+                    _isFirstHidden = false;
                 }
                 return;
             }
