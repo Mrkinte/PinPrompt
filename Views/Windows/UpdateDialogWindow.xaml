@@ -37,7 +37,7 @@
             Margin="15,50,15,10"
             FontSize="24"
             FontWeight="Bold"
-            Text="发现新版本：V2.0.0" />
+            Text="发现新版本：V0.0.0" />
         <FlowDocumentScrollViewer
             x:Name="UpdateLogViewer"
             Grid.Row="1"
@@ -46,13 +46,18 @@
             Grid.Row="2"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
-            <ui:HyperlinkButton 
-                x:Name="DownloadButton"
+            <ui:HyperlinkButton
+                x:Name="GithubDownloadButton"
                 Height="34"
                 Margin="0,10,20,20"
                 Appearance="Primary"
-                
-                Content="下载更新" />
+                Content="下载更新（Github）" />
+            <ui:HyperlinkButton
+                x:Name="SourceForgeDownloadButton"
+                Height="34"
+                Margin="0,10,20,20"
+                Appearance="Primary"
+                Content="下载更新（SourceForge）" />
             <ui:Button
                 Grid.Row="2"
                 Height="34"
